@@ -1,0 +1,15 @@
+Main mechanic: Failure is progress
+- You control the growth of a plant that uses energy points to grow
+- Every time you fail, the plant dies and its energy drops down back into the pot
+- Upon every failure, you end up with more energy to use next time
+
+think ive figured out the core mechanic:
+you spend a point (or two or whatever) to place a stem or a leaf.
+stems can only go so far without a leaf, and will turn light brown the further they get
+placing leaves increases the level of adjacent stems (more green)
+when you cannot go any further (out of energy), your only option is to 'Perish'
+you can always choose to 'Perish' if at least one stem is placed
+when you 'Perish' your stems all drop down back into the pot (maybe gravity until they get low enough and then gravitate toward the pot)
+for each stem that falls into the pot, you gain energy based on the stems level (how green/hydrated/whatever)
+after perishing (does not have to be after all stems recollected), you may 'Resprout' and begin again
+therefor, each growth provides the player with more energy, until they have enough to reach the end
