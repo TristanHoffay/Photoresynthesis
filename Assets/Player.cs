@@ -46,6 +46,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+            MazeSpawner.Instance.GenerateMaze();
+
+
+
         mousePos = Input.mousePosition;
         mousePos.z = 0;
         objPos = Camera.main.WorldToScreenPoint(transform.position);
