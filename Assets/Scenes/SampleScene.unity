@@ -952,7 +952,8 @@ MonoBehaviour:
   origin: {x: -9, y: 14, z: 0}
   height: 20
   width: 10
-  complexity: 1
+  complexity: 10
+  difficulty: 20
   wall: {fileID: 7643426231125216011, guid: cc99c237475ea6c46bea7778d4b8cc62, type: 3}
 --- !u!1 &1879723057
 GameObject:

@@ -25,7 +25,7 @@ public class MazeSpawner : MonoBehaviour
     private GameObject wall;
 
     private bool[,] grid;
-    private bool debug = true;
+    private bool debug = false;
     private GameObject walls;
     private bool generatingMaze = false;
     private ArrayList fakePaths = new ArrayList();

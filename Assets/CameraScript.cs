@@ -8,6 +8,14 @@ public class CameraScript : MonoBehaviour
     public Transform subject;
     [SerializeField]
     private float panSpeed = 5f;
+    [SerializeField]
+    private float leftBound = -9f;
+    [SerializeField]
+    private float rightBound = 9f;
+    [SerializeField]
+    private float bottomBound = 0f;
+    [SerializeField]
+    private float upperBound = 70f;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +32,14 @@ public class CameraScript : MonoBehaviour
             subject = Player.Instance.transform;
         Vector3 newPos = Vector3.Lerp(transform.position, subject.position, panSpeed * Time.deltaTime);
         newPos.z = -10;
+        if (newPos.x < leftBound)
+            newPos.x = leftBound;
+        if (newPos.x > rightBound)
+            newPos.x = rightBound;
+        if (newPos.y < bottomBound)
+            newPos.y = bottomBound;
+        if (newPos.y > upperBound)
+            newPos.y = upperBound;
         transform.position = newPos;
     }
 }
