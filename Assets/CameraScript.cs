@@ -28,18 +28,31 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (subject == null)
-            subject = Player.Instance.transform;
-        Vector3 newPos = Vector3.Lerp(transform.position, subject.position, panSpeed * Time.deltaTime);
-        newPos.z = -10;
-        if (newPos.x < leftBound)
-            newPos.x = leftBound;
-        if (newPos.x > rightBound)
-            newPos.x = rightBound;
-        if (newPos.y < bottomBound)
-            newPos.y = bottomBound;
-        if (newPos.y > upperBound)
-            newPos.y = upperBound;
-        transform.position = newPos;
+        if (Player.Instance.perishing && GameManager.Instance.hasWon)
+        {
+            GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, 10f, panSpeed * Time.deltaTime);
+
+            Vector3 newPos = Vector3.Lerp(transform.position, subject.position, panSpeed * Time.deltaTime);
+            newPos.z = -10;
+            newPos.x = 0;
+            transform.position = newPos;
+        }
+        else
+        {
+            GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, 5f, panSpeed * Time.deltaTime);
+            if (subject == null)
+                subject = Player.Instance.transform;
+            Vector3 newPos = Vector3.Lerp(transform.position, subject.position, panSpeed * Time.deltaTime);
+            newPos.z = -10;
+            if (newPos.x < leftBound)
+                newPos.x = leftBound;
+            if (newPos.x > rightBound)
+                newPos.x = rightBound;
+            if (newPos.y < bottomBound)
+                newPos.y = bottomBound;
+            if (newPos.y > upperBound)
+                newPos.y = upperBound;
+            transform.position = newPos;
+        }
     }
 }

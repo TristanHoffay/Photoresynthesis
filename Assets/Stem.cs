@@ -10,6 +10,8 @@ public class Stem : MonoBehaviour
     private Color aliveColor;
     [SerializeField]
     private Color deadColor;
+    [SerializeField]
+    private AudioSource soilSound;
 
     public bool falling = false, kill = false;
     public int level = 0;
@@ -64,6 +66,7 @@ public class Stem : MonoBehaviour
                 Energy.Instance.AddEnergy(level);
                 // Create some effect; shrink into nothing, spawn text saying +4 or whatever energy level
                 GameManager.Instance.CreateIndicator(transform.position, "+" + level + " Energy", level, 100f, 1f);
+                soilSound.Play();
                 falling = false;
                 kill = true;
             }

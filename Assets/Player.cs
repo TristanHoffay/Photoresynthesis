@@ -12,9 +12,18 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject leaf;
     [SerializeField]
+    private GameObject flower;
+    [SerializeField]
     private int leafCost = 3;
     [SerializeField]
     private int stemCost = 1;
+    [SerializeField]
+    private AudioClip placeSound;
+    [SerializeField]
+    private AudioClip breakSound;
+    [SerializeField]
+    private AudioClip swapSound;
+
 
     [SerializeField]
     private float perishDelay = 0.1f;
@@ -25,12 +34,13 @@ public class Player : MonoBehaviour
     private Vector3 mousePos;
     private Vector3 objPos;
     private float mouseAngle;
-    private bool perishing = false;
+    public bool perishing = false;
     private bool placingLeaf = false;
     private bool canPlaceOutline = true;
     private bool direction = false;
 
     private GameObject outline;
+    private GameObject flowerObj;
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +70,8 @@ public class Player : MonoBehaviour
 
         //create steam or leaf outline pointing at cursor
         outline.transform.rotation = Quaternion.Euler(new Vector3(0, 0, mouseAngle));
+        if (flowerObj != null)
+            flowerObj.transform.rotation = transform.parent.parent.rotation;
         if (canPlaceOutline)
         {
             // interpolate opacity of outline between 0.2 and 0.8
@@ -103,6 +115,7 @@ public class Player : MonoBehaviour
                     Transform stemEnd = newStem.transform.GetChild(1).transform;
                     transform.position = stemEnd.position;
                     transform.parent = stemEnd;
+                    PlaySound(placeSound);
 
                     CheckOutline();
                 }
@@ -119,6 +132,7 @@ public class Player : MonoBehaviour
                     Transform stemEnd = newStem.transform.GetChild(1).transform;
                     transform.position = stemEnd.position;
                     transform.parent = stemEnd;
+                    PlaySound(placeSound);
 
                     CheckOutline();
                 }
@@ -127,6 +141,7 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && !perishing)
         {
             placingLeaf = !placingLeaf;
+            PlaySound(swapSound);
             if (placingLeaf)
             {
                 direction = Random.Range(0, 2) == 0;
@@ -167,6 +182,10 @@ public class Player : MonoBehaviour
                     oldStem.transform.parent = null;
                     oldStem.GetComponent<Rigidbody2D>().velocity = transform.up * 10f + transform.right * Random.Range(-10f, 10f);
                     oldStem.GetComponent<Rigidbody2D>().angularVelocity = Random.Range(-300, 300);
+                    AudioSource src = oldStem.gameObject.AddComponent<AudioSource>();
+                    src.clip = breakSound;
+                    src.volume = 0.4f;
+                    src.Play();
                     // Pause for a moment before next
                     nextPerish = Time.time + perishDelay;
                 }
@@ -182,10 +201,19 @@ public class Player : MonoBehaviour
                 oldStem.transform.parent = null;
                 oldStem.GetComponent<Rigidbody2D>().velocity = transform.up * 10f + transform.right * Random.Range(-10f, 10f);
                 oldStem.GetComponent<Rigidbody2D>().angularVelocity = Random.Range(-300, 300);
+                AudioSource src = oldStem.gameObject.AddComponent<AudioSource>();
+                src.clip = breakSound;
+                src.volume = 0.4f;
+                src.Play();
                 // Pause for a moment before next
                 nextPerish = Time.time + perishDelay;
             }
         }
+    }
+    public void PlaySound(AudioClip clip)
+    {
+        GetComponent<AudioSource>().clip = clip;
+        GetComponent<AudioSource>().Play();
     }
     public void Perish()
     {
@@ -198,6 +226,10 @@ public class Player : MonoBehaviour
             spr.color = newColor;
             canPlaceOutline = false;
         }
+    }
+    public void SpawnFlower()
+    {
+        flowerObj = Instantiate(flower, gameObject.transform);
     }
     public void CheckOutline()
     {

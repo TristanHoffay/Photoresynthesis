@@ -9,6 +9,7 @@ TagManager:
   - Leaf
   - Stem
   - Wall
+  - Win Text
   layers:
   - Default
   - TransparentFX
@@ -57,4 +58,7 @@ TagManager:
     locked: 0
   - name: Plant
     uniqueID: 2390924721
+    locked: 0
+  - name: flower
+    uniqueID: 1169125373
     locked: 0
